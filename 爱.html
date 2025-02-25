@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 在<head>标签内添加样式 -->
+<style>
+    /* 音乐播放器样式 */
+    .music-player {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 30px;
+        box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
+        transition: 0.3s;
+    }
+
+    .music-btn {
+        width: 50px;
+        height: 50px;
+        border: none;
+        background: #ff3366;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        animation: heartbeat 1.5s infinite;
+    }
+
+    .music-btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* 在原有样式后添加 */
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- 在<body>标签开始后添加音乐播放器 -->
+<div class="music-player">
+    <button class="music-btn" id="musicControl">🎵</button>
+    <audio id="bgMusic" loop>
+        <!-- 准备2种格式的音频文件以确保浏览器兼容 -->
+        <source src="水星记.mp3" type="audio/mpeg">
+        <source src="水星记.ogg" type="audio/ogg">
+        您的浏览器不支持音频播放
+    </audio>
+</div>
+
+<script>
+    // 在原有script中添加音乐控制代码
+    const bgMusic = document.getElementById('bgMusic');
+    const musicControl = document.getElementById('musicControl');
+    let isPlaying = false;
+
+    // 音乐播放控制
+    function toggleMusic() {
+        if (isPlaying) {
+            bgMusic.pause();
+            musicControl.innerHTML = "🎵";
+            musicControl.style.animation = 'heartbeat 1.5s infinite';
+        } else {
+            bgMusic.play().catch(() => {
+                // 处理自动播放被阻止的情况
+                musicControl.style.animation = 'none';
+                alert('请点击页面任意位置后手动播放音乐❤️');
+            });
+            musicControl.innerHTML = "🎶";
+            musicControl.style.animation = 'rotate 2s linear infinite';
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // 添加交互事件
+    musicControl.addEventListener('click', toggleMusic);
+    
+    // 尝试自动播放（需要用户交互后才能真正播放）
+    document.addEventListener('click', () => {
+        if (!isPlaying) {
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicControl.innerHTML = "🎶";
+                musicControl.style.animation = 'rotate 2s linear infinite';
+            });
+        }
+    }, { once: true }); // 仅执行一次
+</script>
+    <meta charset="UTF-8">
+    <title>给最爱的❤️[毛美璇]❤️</title>
+    <style>
+        body {
+            background: #ffe6f2;
+            font-family: '微软雅黑';
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(45deg, #ff99cc, #ff6699);
+            color: white;
+        }
+
+        .timeline {
+            padding: 50px 20px;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .event {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: 1s;
+        }
+
+        .love-btn {
+            background: #ff3366;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff3366;
+            font-size: 24px;
+            animation: float 3s ease-out;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>❤️ 献给全世界最可爱的 [毛美璇] ❤️</h1>
+        <button class="love-btn" onclick="showLove()">点击收获爱心</button>
+        <div id="countup"></div>
+    </div>
+
+    <!-- 在原有CSS中添加图片相关样式 -->
+<style>
+    .event {
+        /* 保持原有样式 */
+        position: relative;
+        display: flex;
+        /* 新增 */
+        gap: 20px;
+        /* 交替布局 */
+    }
+
+    /* 图片容器 */
+    .event-img {
+        flex: 1;
+        min-width: 250px;
+        max-width: 400px;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    /* 图片样式 */
+    .event-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 文字内容容器 */
+    .event-content {
+        flex: 2;
+        padding: 10px;
+    }
+
+    /* 交替布局：偶数项图片在右边 */
+    .event:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    /* 悬停效果 */
+    .event-img:hover {
+        transform: scale(1.05);
+        z-index: 1;
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+        .event {
+            flex-direction: column !important;
+        }
+        .event-img {
+            max-width: 100%;
+            max-height: 300px;
+        }
+    }
+
+    /* 图片标题样式 */
+    .image-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 8px;
+    }
+</style>
+
+<!-- 修改时间轴事件结构 -->
+<div class="timeline">
+    <div class="event">
+        <!-- 图片容器 -->
+        <div class="event-img">
+            <img src="多多1.jpg" 
+                 alt="我们的初遇"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">2023年8月19日 第一次见面留念（没有照片多多镇楼）</p>
+        </div>
+        
+        <!-- 文字内容 -->
+        <div class="event-content">
+            <h3>📅 我们的初遇</h3>
+            <p>那天下地铁第一次见到真人，那天你穿着灰色防晒服和黑色短裙我一眼惊为天人，在麦当劳的时候我内心很忐忑紧张，也很享受。
+            </p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="狗尾巴草.jpg" 
+                 alt="mmx吉林行"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">mmx吉林行</p>
+        </div>
+        <div class="event-content">
+            <h3>🚝mmx吉林行</h3>
+            <p>很突然的一次旅行，突然的让我不敢相信。很暧昧的吉林大桥让我的内心变得非常坚定。</p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="在一起.jpg" 
+                 alt="在一起了！"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">在一起了！</p>
+        </div>
+        <div class="event-content">
+            <h3>👫在一起了！</h3>
+            <p>一切发生的都那么快，在第一次见面之后我们就确定了彼此，短短几天后我们正式开始交往了，长达半年的暧昧拉扯终于迎来了he！！</p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="第一次会面.jpg" 
+                 alt="镇江！"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">镇江！</p>
+        </div>
+        <div class="event-content">
+            <h3>🎒第一次旅行！</h3>
+            <p>像梦一样的旅行，像梦一样的江南，至今都忘不了那时的感觉！独一无二的回忆无法复刻的经典！！！！！</p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="扬州.jpg" 
+                 alt="扬州！"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">扬州！</p>
+        </div>
+        <div class="event-content">
+            <h3>📷烟柳繁华地，富贵温柔乡</h3>
+            <p>不多说了，摄影技术大进步</p>
+            <p>扬州也是让我无数次怀念的地方，</p>
+            <P>桥、水还有人！</P>  
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="100天.jpg" 
+                 alt="100天！"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">100天！</p>
+        </div>
+        <div class="event-content">
+            <h3>🎂100天！</h3>
+            <p>这么快就一百天了！！当时觉得时间过得很快！现在怎么感觉这么慢了呢？</p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="面包.jpg" 
+                 alt="哈尔滨"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">哈尔滨！</p>
+        </div>
+        <div class="event-content">
+            <h3>🍦第二次旅行！</h3>
+            <p>时间嗖的一下到了我们的第二次旅行——哈尔滨！吃到了巨好吃的面包夹冰淇淋</p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="公主.jpg" 
+                 alt="公主"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">公主</p>
+        </div>
+        <div class="event-content">
+            <h3>👸恭迎公主陛下！</h3>
+            <p>公主陛下绝美！</p>
+        </div>
+    </div>
+    <div class="event">
+        <div class="event-img">
+            <img src="毛哈尔滨.jpg" 
+                 alt="哈尔滨"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">哈尔滨</p>
+        </div>
+        <div class="event-img">
+            <img src="岳哈尔滨.jpg" 
+                 alt="哈尔滨"
+                 onclick="showFullscreen(this)">
+            <p class="image-caption">哈尔滨</p>
+        </div>
+        <div class="event-content">
+            <h3>⛪圣索菲亚大教堂</h3>
+            <p>不多说还是绝美！</p>
+        </div>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="蓝精灵.jpg" 
+             alt="冰雪新天地"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">冰雪新天地</p>
+    </div>
+    <div class="event-content">
+        <h3>蓝精灵</h3>
+        <p>插播一张蓝精灵毛</p>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="琼海.jpg" 
+             alt="海南"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">海南！</p>
+    </div>
+    <div class="event-content">
+        <h3>🌴小岛夏天</h3>
+        <p>oh，yeah！终于来到海南了，来到了你学习生活的地方感觉离你更近了一步</p>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="一周年.jpg" 
+             alt="一周年"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">一周年</p>
+    </div>
+    <div class="event-content">
+        <h3>一周年了！！</h3>
+        <p>嗖嗖嗖！一周年了！很有意义的一个纪念日，过得很充实，一起做了蛋糕，一起吃了想吃很久的元盛居！！</p>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="we.jpg" 
+             alt="三亚"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">三亚！</p>
+    </div>
+    <div class="event-content">
+        <h3>🌊三亚！</h3>
+        <p>哈哈哈哈哈哈哈哈哈哈哈！！！！！！！玩的超级无敌爽的三亚！！！！！！</p>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="情人节.jpg" 
+             alt="情人节"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">情人节！</p>
+    </div>
+    <div class="event-content">
+        <h3>💞情人节！</h3>
+        <p>终于在一起过了情人节！！第一个在一起过的情人节！第一个有意义的情人节！计划了很久，可惜被某位大侦探识破了🥀。</p>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="糊糊.jpg" 
+             alt="糊糊"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">糊糊！</p>
+    </div>
+    <div class="event-content">
+        <h3>🐱糊糊出生！！</h3>
+        <p>恭喜你在生日前夕拥有了自己的小猫，恭喜你实现了人生愿望。我会先帮你照顾好你的小猫的💏</p>
+    </div>
+</div>
+<div class="event">
+    <div class="event-img">
+        <img src="多多2.jpg" 
+             alt="多多"
+             onclick="showFullscreen(this)">
+        <p class="image-caption">多多！</p>
+    </div>
+    <div class="event-content">
+        <h3>🐱多多</h3>
+        <p>最后多多结尾，让我们感谢多多，感谢这只伟大的小猫。</p>
+    </div>
+</div>
+
+<script>
+    // 添加图片全屏查看功能
+    function showFullscreen(img) {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: zoom-out;
+        `;
+
+        const fullscreenImg = new Image();
+        fullscreenImg.src = img.src;
+        fullscreenImg.style.maxWidth = '90%';
+        fullscreenImg.style.maxHeight = '90%';
+        fullscreenImg.style.borderRadius = '10px';
+
+        overlay.appendChild(fullscreenImg);
+        document.body.appendChild(overlay);
+
+        // 点击关闭
+        overlay.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+        });
+    }
+</script>
+            
+    <script>
+        // 爱心动画
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }
+
+        // 显示爱心雨
+        function showLove() {
+            for(let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createHeart(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+        }
+
+        // 在一起天数计算
+        const startDate = new Date('2023-8-28-22:37'); // 修改为你们的纪念日
+        setInterval(() => {
+            const diff = Date.now() - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('countup').innerHTML = 
+                `我们已经相伴 ${days} 天 ${Math.floor(diff/1000)} 秒`;
+        }, 1000);
+
+        // 时间轴动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const events = document.querySelectorAll('.event');
+            events.forEach((event, index) => {
+                setTimeout(() => {
+                    event.style.opacity = 1;
+                    event.style.transform = 'translateX(0)';
+                }, 500 * index);
+            });
+        });
+    </script>
+</body>
+</html>}

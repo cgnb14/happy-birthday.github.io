@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 在<head>标签内添加样式 -->
+<style>
+    /* 音乐播放器样式 */
+    .music-player {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 30px;
+        box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
+        transition: 0.3s;
+    }
+
+    .music-btn {
+        width: 50px;
+        height: 50px;
+        border: none;
+        background: #ff3366;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        animation: heartbeat 1.5s infinite;
+    }
+
+    .music-btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* 在原有样式后添加 */
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- 在<body>标签开始后添加音乐播放器 -->
+<div class="music-player">
+    <button class="music-btn" id="musicControl">🎵</button>
+    <audio id="bgMusic" loop>
+        <!-- 准备2种格式的音频文件以确保浏览器兼容 -->
+        <source src="生日祝福歌.mp3" type="audio/mpeg">
+        <source src="生日祝福歌.ogg" type="audio/ogg">
+        您的浏览器不支持音频播放
+    </audio>
+</div>
+
+<script>
+    // 在原有script中添加音乐控制代码
+    const bgMusic = document.getElementById('bgMusic');
+    const musicControl = document.getElementById('musicControl');
+    let isPlaying = false;
+
+    // 音乐播放控制
+    function toggleMusic() {
+        if (isPlaying) {
+            bgMusic.pause();
+            musicControl.innerHTML = "🎵";
+            musicControl.style.animation = 'heartbeat 1.5s infinite';
+        } else {
+            bgMusic.play().catch(() => {
+                // 处理自动播放被阻止的情况
+                musicControl.style.animation = 'none';
+                alert('请点击页面任意位置后手动播放音乐❤️');
+            });
+            musicControl.innerHTML = "🎶";
+            musicControl.style.animation = 'rotate 2s linear infinite';
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // 添加交互事件
+    musicControl.addEventListener('click', toggleMusic);
+    
+    // 尝试自动播放（需要用户交互后才能真正播放）
+    document.addEventListener('click', () => {
+        if (!isPlaying) {
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicControl.innerHTML = "🎶";
+                musicControl.style.animation = 'rotate 2s linear infinite';
+            });
+        }
+    }, { once: true }); // 仅执行一次
+</script>
+<!-- 在原有CSS样式中添加新样式 -->
+<style>
+   /* 悬浮爱心样式 */
+   .heart-link {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.5s ease;
+        font-size: 48px;
+        text-shadow: 0 0 15px rgba(255, 51, 102, 0.5);
+        animation: floatHeart 3s ease-in-out infinite;
+    }
+
+    .heart-link:hover {
+        transform: scale(1.2);
+        filter: hue-rotate(45deg);
+        animation: none;
+    }
+    
+    /* 点击动画 */
+    @keyframes heartJump {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.8); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes floatHeart {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+</style>
+
+<!-- 在<body>标签内的任意位置添加爱心 -->
+<div class="heart-link" id="secretHeart">❤️</div>
+
+<script>
+    // 在原有script中添加以下代码
+    const secretHeart = document.getElementById('secretHeart');
+    
+    // 点击跳转功能
+    secretHeart.addEventListener('click', function() {
+        // 添加点击动画
+        this.style.animation = 'heartJump 0.5s';
+        
+        // 跳转延迟让动画完成
+        setTimeout(() => {
+            window.location.href = '爱.html'; // 修改为你的目标页面
+        }, 500);
+    });
+
+    // 动画结束后重置
+    secretHeart.addEventListener('animationend', () => {
+        secretHeart.style.animation = 'floatHeart 3s ease-in-out infinite';
+    });
+secretHeart.addEventListener('click', function(e) {
+    // 创建粒子特效
+    for(let i = 0; i < 10; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            left: ${e.clientX}px;
+            top: ${e.clientY}px;
+            color: #ff3366;
+            pointer-events: none;
+            animation: particleFly ${Math.random()*0.5+0.5}s linear;
+        `;
+        particle.innerHTML = '❤️';
+        document.body.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 500);
+    }
+});
+
+// 添加粒子动画
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes particleFly {
+        0% { opacity: 1; transform: translate(0,0); }
+        100% { opacity: 0; transform: translate(${Math.random()*200-100}px, ${Math.random()*200-100}px); }
+    }
+`;
+document.head.appendChild(style);
+
+</script>
+    <meta charset="UTF-8">
+    <title>生日快乐！我的宝贝毛美璇！！</title>
+    <style>
+        /* 基础样式 */
+        body {
+            margin: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: 'Comic Sans MS', cursive;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* 标题动画 */
+        h1 {
+            color: #ff0066;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* 照片墙样式 */
+        .photo-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .photo {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .photo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 祝福卡片 */
+        .message-box {
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .message-box::before {
+            content: "❤";
+            position: absolute;
+            font-size: 40px;
+            color: #ff0066;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 动画效果 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff0066;
+            animation: heartFloat 3s linear;
+        }
+
+        @keyframes heartFloat {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎂 生日快乐，我的小毛咪！ 🎉</h1>
+        
+        <div class="photo-wall">
+            <!-- 替换成你们的照片 -->
+            <img class="photo" src="生日.jpg" alt="">
+            <img class="photo" src="毛毛1.jpg" alt="">
+            <img class="photo" src="毛毛2.jpg" alt="">
+        </div>
+
+        <div class="message-box">
+            <h2>给最爱的你：</h2>
+            <p>亲爱的毛美璇，</p>
+            <p>这是一个非常非常值得高兴的日子！！</p>
+            <p>虽然我依然不能陪在你身边过生日。</p>
+            <p>没能当面为你点燃生日蜡烛，</p>
+            <p>没能第一时间送上拥抱，</p>
+            <p>我满心都是遗憾。</p>
+            <p>但是希望我精心为你准备的礼物能让你开心💞</p>
+            <p>生日快乐！永远爱你！</p>
+            <p style="text-align: right;">—— 爱你的[岳子成]</p>
+        </div>
+
+        <div id="heart-container"></div>
+    </div>
+
+    <script>
+        // 点击页面生成爱心
+        document.addEventListener('click', function(e) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.getElementById('heart-container').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        });
+
+        // 自动飘落效果
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            document.getElementById('heart-container').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }
+
+        setInterval(createFloatingHeart, 1000);
+    </script>
+</body>
+</html>
